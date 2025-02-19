@@ -16,7 +16,9 @@ resource "aws_instance" "demo" {
  root_block_device {
     volume_size = 30
     volume_type = "gp2"
-  }
+}
+    user_data = file("resouce.sh")
+
 }
 
 //Security Group
