@@ -6,7 +6,7 @@ provider "aws" {
 resource "aws_instance" "demo" {
     ami           = "ami-0cb91c7de36eed2cb"
     instance_type = "t2.large"
-    key_name = "jenkins.pem"
+    key_name = "swiggy-project.pem"
     vpc_security_group_ids  = [aws_security_group.swiggy_sg.id]  
 
     tags = {
