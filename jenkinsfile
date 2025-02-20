@@ -82,7 +82,7 @@ stage("Docker Build & Push") {
         }
         stage('Deploy to Container') {
             steps {
-                sh 'docker run -d --name swiggy -p 3000:3000 dakshbhavsar/swiggy:latest:latest'
+                sh 'docker run -d --name swiggy -p 3000:3000 dakshbhavsar/swiggy:latest'
             }
         }
     }
