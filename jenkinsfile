@@ -51,17 +51,30 @@ pipeline {
                 sh "trivy fs . > trivyfs.txt"
             }
         }
-        stage("Docker Build & Push") {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {   
-                        sh "docker build -t swiggy ."
-                        sh "docker tag swiggy dakshbhavsar/swiggy:latest"
-                        sh "docker push dakshbhavsar/swiggy:latest"
-                    }
-                }
+stage("Docker Build & Push") {
+    steps {
+        script {
+            withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {   
+                sh '''
+                echo "🔄 Cleaning up old Docker images..."
+                docker images -q dakshbhavsar/swiggy:latest | xargs -r docker rmi -f
+                
+                echo "🚀 Building the Docker image..."
+                docker build --no-cache -t swiggy .
+
+                echo "🔄 Tagging the image..."
+                docker tag swiggy dakshbhavsar/swiggy:latest
+
+                echo "📤 Pushing the image to Docker Hub..."
+                docker push dakshbhavsar/swiggy:latest
+
+                echo "✅ Docker image pushed successfully!"
+                '''
             }
         }
+    }
+}
+
         stage("TRIVY Image Scan") {
             steps {
                 sh "trivy image kastrov/swiggy:latest > trivy.txt"
