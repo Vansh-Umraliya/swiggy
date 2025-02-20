@@ -77,12 +77,12 @@ stage("Docker Build & Push") {
 
         stage("TRIVY Image Scan") {
             steps {
-                sh "trivy image kastrov/swiggy:latest > trivy.txt"
+                sh "trivy image dakshbhavsar/swiggy:latest > trivy.txt"
             }
         }
         stage('Deploy to Container') {
             steps {
-                sh 'docker run -d --name swiggy -p 3000:3000 kastrov/swiggy:latest'
+                sh 'docker run -d --name swiggy -p 3000:3000 dakshbhavsar/swiggy:latest:latest'
             }
         }
     }
