@@ -53,6 +53,8 @@ pipeline {
         }
 stage("Docker Build & Push") {
     steps {
+     sh "docker stop swiggy"
+     sh "docker rm swiggy"
         script {
             withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {   
                 sh '''
