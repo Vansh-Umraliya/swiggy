@@ -55,9 +55,9 @@ stage("Docker Build & Push") {
     steps {
         script {
             withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {   
+                sh '''
                 docker stop swiggy
                 docker rm swiggy
-                sh '''
                 echo "🔄 Cleaning up old Docker images..."
                 docker images -q dakshbhavsar/swiggy:latest | xargs -r docker rmi -f
                 
